@@ -1,0 +1,246 @@
+{% extends 'setting/base.html.twig' %}
+{% block stylesheets %}
+<style>
+
+    /* The following styles are just to make the page look nice. */
+
+    /* Workaround to show Arial Black in Firefox. */
+    @font-face
+    {
+        font-family: 'arial-black';
+        src: local('Arial Black');
+    }
+
+    *[contenteditable="true"]
+    {
+        padding: 10px;
+    }
+
+    #container
+    {
+        width: 960px;
+        margin: 30px auto 0;
+    }
+
+    #header
+    {
+        overflow: hidden;
+        padding: 0 0 30px;
+        border-bottom: 5px solid #05B2D2;
+        position: relative;
+    }
+
+    #headerLeft,
+    #headerRight
+    {
+        width: 49%;
+        overflow: hidden;
+    }
+
+    #headerLeft
+    {
+        float: left;
+        padding: 10px 1px 1px;
+    }
+
+    #headerLeft h2,
+    #headerLeft h3
+    {
+        text-align: right;
+        margin: 0;
+        overflow: hidden;
+        font-weight: normal;
+    }
+
+    #headerLeft h2
+    {
+        font-family: "Arial Black",arial-black;
+        font-size: 4.6em;
+        line-height: 1.1em;
+        text-transform: uppercase;
+    }
+
+    #headerLeft h3
+    {
+        font-size: 2.3em;
+        line-height: 1.1em;
+        margin: .2em 0 0;
+        color: #666;
+    }
+
+    #headerRight
+    {
+        float: right;
+        padding: 1px;
+    }
+
+    #headerRight p
+    {
+        line-height: 1.8em;
+        text-align: justify;
+        margin: 0;
+    }
+
+    #headerRight p + p
+    {
+        margin-top: 20px;
+    }
+
+    #headerRight > div
+    {
+        padding: 20px;
+        margin: 0 0 0 30px;
+        font-size: 1.4em;
+        color: #666;
+    }
+
+    #columns
+    {
+        color: #333;
+        overflow: hidden;
+        padding: 20px 0;
+    }
+
+    #columns > div
+    {
+        float: left;
+        width: 33.3%;
+    }
+
+    #columns #column1 > div
+    {
+        margin-left: 1px;
+    }
+
+    #columns #column3 > div
+    {
+        margin-right: 1px;
+    }
+
+    #columns > div > div
+    {
+        margin: 0px 10px;
+        padding: 10px 20px;
+    }
+
+    #columns blockquote
+    {
+        margin-left: 15px;
+    }
+
+    #tagLine
+    {
+        border-top: 5px solid #05B2D2;
+        padding-top: 20px;
+    }
+
+    #taglist {
+        display: inline-block;
+        margin-left: 20px;
+        font-weight: bold;
+        margin: 0 0 0 20px;
+    }
+
+</style>
+{% endblock %}
+
+{% block action %}
+{% endblock %}
+{% block body %}
+<form method="POST" action="{{ path('setting_insert_news') }}">
+    <div class="row">
+        <div class="col-md-12 panel-info">
+            <div class="content-box-header panel-heading">
+                <div class="panel-title ">Information sur l'article : </div>
+                <div class="panel-options">
+                    <a href="#" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a>
+                    <a href="#" data-rel="reload"><i class="glyphicon glyphicon-cog"></i></a>
+                </div>
+            </div>
+            <div class="content-box-large box-with-header">
+                <div>
+                    <div class="row" >
+                        <label class="col-md-6 control-label" for="title">Titre</label>
+                        <label class="col-md-6 control-label" for="date">Date de sorti</label>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 pull-left">
+                            <input class="form-control" type="text" name="title" placeholder="Titre de l'article"></p>
+                        </div>
+                        <div class="col-sm-6 pull-left">
+                            <input class="form-control" type="date" name="date"></p>
+                        </div>
+                    </div>
+                    <div class="row" >
+                    <label class="col-md-6 control-label" for="meta">Mot clés<a class="pull-right"><i class="glyphicon glyphicon-plus-sign"></i></a></label>
+                    <label class="col-md-6 control-label" for="categorie">Categorie<a class="pull-right"><i class="glyphicon glyphicon-plus-sign"></i></a></label>
+                    </div>
+                    <div class="row" >
+                        <div class="form-group">
+                            
+                            <div class="col-md-6">
+                               <input class="form-control" type="text" name="meta" placeholder="ex : voiture"></p>
+                            </div>
+                            <div class="col-md-6">
+                                <select class="form-control" name="categorie">
+                                    {% for categorie in categories %}
+                                    <option value="{{ categorie.id }}" >{{ categorie.catnom }}</option>
+                                    {% endfor %}
+                                </select> 
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="row" >
+                    </br>
+                    <label class="col-md-6 control-label" for="description">Desciption</label>
+                    </div>
+                    <div class="row" >
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <textarea style="height : 100px;width:100%" name="description"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 panel-primary">
+            <div class="content-box-header panel-heading">
+                <div class="panel-title ">Contenu de l'article ( click to edit )</div>
+                
+                <div class="panel-options">
+                    <a href="#" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i>Reload</a>
+                </div>
+            </div>
+            <div class="content-box-large box-with-header"  style="background-color:#2c37421c;padding : 5px;margin-bottom:25px;">
+                <textarea name="article-body" class="form-inline">
+                    
+                    <h1 style="text-align: center;"><q><span style="font-family:comic sans ms,cursive"><span style="font-size:36px">Morning-reaches </span></span></q></h1>
+
+                    <p style="text-align: center;"><span style="color:#A9A9A9"> Article subtitle</span></p>
+
+                    <p>Ut tristique adipiscing mauris, sit amet suscipit metus porta quis. Donec dictum tincidunt erat, eu blandit ligula. Nam sit amet dolor sapien. Quisque velit erat, congue sed suscipit vel, feugiat sit amet enim. Suspendisse interdum enim at mi tempor commodo. Sed tincidunt sed tortor eu scelerisque. Donec luctus malesuada vulputate. Nunc vel auctor metus, vel adipiscing odio. Aliquam aliquet rhoncus libero, at varius nisi pulvinar nec. Aliquam erat volutpat.</p>
+
+                    <p>&nbsp;</p>
+
+                    <p>Donec ut neque mi. Praesent enim nisl, bibendum vitae ante et, placerat pharetra magna. Donec facilisis nisl turpis, eget facilisis turpis semper non. Maecenas luctus ligula tincidunt iasdsd vitae ante et, Interdum et malesuada fames ac ante ipsum primis in faucibus. Quisque sed consectetur erat. Maecenas in elementum libero. Sed consequat pellentesque ultricies. Ut laoreet vehicula nisl sed placerat. Duis posuere lectus n, eros et hendrerit pellentesque, ante magna condimentum sapien, eget ultrices eros libero non orci. Etiam varius diam lectus.</p>
+
+                </textarea>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <button  class="btn btn-default" style="width : 100%;"><i class="glyphicon glyphicon-eye-open"></i> See</button>
+        <button type="submit" class="btn btn-primary"  style="width : 100%;margin-top:15px;margin-bottom:15px;"><i class="glyphicon glyphicon-save"></i> Publish</button>
+    </div>
+</form>
+{% endblock %}
+
+{% block javascripts%}
+    <script src="{{ asset('assets/editor/ckeditor.js') }}"></script>
+    <script>
+        CKEDITOR.inline( 'article-body' );
+    </script>
+{% endblock %}

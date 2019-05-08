@@ -1,0 +1,80 @@
+{% htmlcompress %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}{{ title }}{% endblock %}</title>
+        
+        <meta name="author" content="">
+        {% block meta %}
+        {% endblock %}
+        <meta charset="UTF-8">
+        <!-- mobile specific metas
+        ================================================== -->
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <!-- CSS
+        ================================================== -->
+        <link rel="stylesheet" href="{{ asset('assets/css/base.css')}}">
+        <link rel="stylesheet" href="{{ asset('assets/css/vendor.css')}}">
+        <link rel="stylesheet" href="{{ asset('assets/css/main.css')}}">
+
+        <!-- script
+        ================================================== -->
+        <script src="{{ asset('assets/js/modernizr.js')}}"></script>
+        <script src="{{ asset('assets/js/pace.min.js')}}"></script>
+
+        <!-- favicons
+        ================================================== -->
+        <link rel="shortcut icon" href="{{ asset('assets/favicon.ico')}}" type="image/x-icon">
+        <link rel="icon" href="{{ asset('assets/favicon.ico')}}" type="image/x-icon">
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+        <!-- pageheader
+        ================================================== -->
+        <div class="s-pageheader">
+        {{ include("fragments/header.html.twig") }}
+        </div>
+        <!-- end s-pageheader -->
+        
+        <!-- s-content
+        ================================================== -->
+        <section class="s-content">
+        {% block body %}{% endblock %}
+        </section> <!-- s-content -->
+
+         <!-- s-extra
+        ================================================== -->
+        {{ include("fragments/popular.html.twig") }}
+        <!-- end s-extra -->
+
+        <!-- s-footer
+        ================================================== -->
+        {{ include("fragments/footer.html.twig") }}
+        <!-- end s-footer -->
+
+
+        <!-- preloader
+        ================================================== -->
+        <div id="preloader">
+            <div id="loader">
+                <div class="line-scale">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+        </div>
+        <!-- Java Script
+        ================================================== -->
+        <script src="{{ asset('assets/js/jquery-3.2.1.min.js')}}"></script>
+        <script src="{{ asset('assets/js/plugins.js')}}"></script>
+        <script src="{{ asset('assets/js/main.js')}}"></script>
+
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>
+{% endhtmlcompress %}

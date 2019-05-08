@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+{% block meta %}
+    <meta name="desciption" content="{% for meta in article.tags %} {{ meta.mots }}{% endfor %}">
+{% endblock %}
+{% block body %}
+<article class="row format-gallery">
+
+    <div class="s-content__header col-full">
+        <h1 class="s-content__header-title">
+            {{ article.titre}}
+        </h1>
+        <ul class="s-content__header-meta">
+            <li class="date">
+            {{ article.created | date('m')}} 
+            {{ article.created | date('d')}}, 
+            {{ article.created | date('Y')}}
+            </li>
+            <li class="cat">
+                In
+                <a href="{{ path('categories',{'name' : article.category.catnom }) }}">{{ article.category.catnom }}</a>
+            </li>
+        </ul>
+    </div> <!-- end s-content__header -->
+
+    <div class="s-content__media col-full">
+        <div class="s-content__slider slider">
+            <div class="slider__slides">
+                <div class="slider__slide">
+                    <img src="images/thumbs/single/gallery/single-gallery-01-1000.jpg" 
+                            srcset="images/thumbs/single/gallery/single-gallery-01-2000.jpg 2000w, 
+                                    images/thumbs/single/gallery/single-gallery-01-1000.jpg 1000w, 
+                                    images/thumbs/single/gallery/single-gallery-01-500.jpg 500w" 
+                            sizes="(max-width: 2000px) 100vw, 2000px" alt="" >
+                </div>
+            </div>
+        </div>
+    </div> <!-- end s-content__media -->
+
+    <div class="col-full s-content__main">
+        {{ article.contenu | raw }}
+
+        <div class="s-content__pagenav">
+            <div class="s-content__nav">
+                <div class="s-content__prev">
+                    <a href="#0" rel="prev">
+                        <span>Previous Post</span>
+                        Tips on Minimalist Design 
+                    </a>
+                </div>
+                <div class="s-content__next">
+                    <a href="#0" rel="next">
+                        <span>Next Post</span>
+                        Less Is More 
+                    </a>
+                </div>
+            </div>
+        </div> <!-- end s-content__pagenav -->
+
+    </div> <!-- end s-content__main -->
+
+</article>
+{% endblock %}

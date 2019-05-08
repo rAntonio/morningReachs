@@ -1,0 +1,1 @@
+heroku config:set DATABASE_URL=mysql://sql9290407:xYL5AzMvXl@sql9.freemysqlhosting.net:3306/sql9290407

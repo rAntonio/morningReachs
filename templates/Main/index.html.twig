@@ -1,0 +1,224 @@
+{% htmlcompress %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ title }}</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="{{ asset('assets/css/base.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/css/vendor.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/css/main.css')}}">
+
+    <!-- script
+    ================================================== -->
+    <script src="{{ asset('assets/js/modernizr.js')}}"></script>
+    <script src="{{ asset('assets/js/pace.min.js')}}"></script>
+
+    <!-- favicons
+    ================================================== -->
+    <link rel="shortcut icon" href="{{ asset('assets/favicon.ico')}}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('assets/favicon.ico')}}" type="image/x-icon">
+</head>
+<body>
+    <div id="top">
+
+    <!-- pageheader
+    ================================================== -->
+        <section class="s-pageheader s-pageheader--home">
+        {{ include("fragments/header.html.twig") }}
+
+        <div class="pageheader-content row">
+            <div class="col-full">
+
+                <div class="featured">
+
+                    <div class="featured__column featured__column--big">
+                        <div class="entry" style="background-image:url('images/thumbs/featured/featured-guitarman.jpg');">
+                            
+                            <div class="entry__content">
+                                <span class="entry__category"><a href="#0">Music</a></span>
+
+                                <h1><a href="#0" title="">What Your Music Preference Says About You and Your Personality.</a></h1>
+
+                                <div class="entry__info">
+                                    <a href="#0" class="entry__profile-pic">
+                                        <img class="avatar" src="images/avatars/user-03.jpg" alt="">
+                                    </a>
+
+                                    <ul class="entry__meta">
+                                        <li><a href="#0">John Doe</a></li>
+                                        <li>December 29, 2017</li>
+                                    </ul>
+                                </div>
+                            </div> <!-- end entry__content -->
+                            
+                        </div> <!-- end entry -->
+                    </div> <!-- end featured__big -->
+
+                    <div class="featured__column featured__column--small">
+
+                        <div class="entry" style="background-image:url('images/thumbs/featured/featured-watch.jpg');">
+                            
+                            <div class="entry__content">
+                                <span class="entry__category"><a href="#0">Management</a></span>
+
+                                <h1><a href="#0" title="">The Pomodoro Technique Really Works.</a></h1>
+
+                                <div class="entry__info">
+                                    <a href="#0" class="entry__profile-pic">
+                                        <img class="avatar" src="images/avatars/user-03.jpg" alt="">
+                                    </a>
+
+                                    <ul class="entry__meta">
+                                        <li><a href="#0">John Doe</a></li>
+                                        <li>December 27, 2017</li>
+                                    </ul>
+                                </div>
+                            </div> <!-- end entry__content -->
+                          
+                        </div> <!-- end entry -->
+
+                        <div class="entry" style="background-image:url('images/thumbs/featured/featured-beetle.jpg');">
+
+                            <div class="entry__content">
+                                <span class="entry__category"><a href="#0">LifeStyle</a></span>
+
+                                <h1><a href="#0" title="">Throwback To The Good Old Days.</a></h1>
+
+                                <div class="entry__info">
+                                    <a href="#0" class="entry__profile-pic">
+                                        <img class="avatar" src="images/avatars/user-03.jpg" alt="">
+                                    </a>
+
+                                    <ul class="entry__meta">
+                                        <li><a href="#0">John Doe</a></li>
+                                        <li>December 21, 2017</li>
+                                    </ul>
+                                </div>
+                            </div> <!-- end entry__content -->
+
+                        </div> <!-- end entry -->
+
+                    </div> <!-- end featured__small -->
+                </div> <!-- end featured -->
+
+            </div> <!-- end col-full -->
+        </div> <!-- end pageheader-content row -->
+
+    </section> <!-- end s-pageheader -->
+    <!-- end s-pageheader -->
+
+
+    <!-- s-content
+    ================================================== -->
+    <section class="s-content">
+        
+        <div class="row masonry-wrap">
+            <div class="masonry">
+
+                <div class="grid-sizer"></div>
+                {% for article in articles %}
+                <article class="masonry__brick entry format-standard" data-aos="fade-up">
+                        
+                    <div class="entry__thumb">
+                        <a href="{{ path('index_detail',{'id' : article.id,'titre' : article.getUrlsFormat() }) }}" class="entry__thumb-link">
+                            <img src="images/thumbs/masonry/lamp-400.jpg" 
+                                    srcset="images/thumbs/masonry/lamp-400.jpg 1x, images/thumbs/masonry/lamp-800.jpg 2x" alt="">
+                        </a>
+                    </div>
+    
+                    <div class="entry__text">
+                        <div class="entry__header">
+                            
+                            <div class="entry__date">
+                                <a href="{{ path('index_detail',{'id' : article.id,'titre' : article.getUrlsFormat() }) }}">{{ article.created | date('m')}} 
+                                {{ article.created | date('d')}}, {{ article.created | date('Y')}}</a>
+                            </div>
+                            <h1 class="entry__title"><a href="{{ path('index_detail',{'id' : article.id,'titre' : article.getUrlsFormat() }) }}">{{article.titre}}</a></h1>
+                            
+                        </div>
+                        <div class="entry__excerpt">
+                            {{ article.presentation | raw }}
+                        </div>
+                        <div class="entry__meta">
+                            <span class="entry__meta-links">
+                                <a href="{{ path('categories',{'name' : article.category.catnom }) }}">{{ article.category.catnom }}</a> 
+                            </span>
+                        </div>
+                    </div>
+    
+                </article> <!-- end article -->
+                {% endfor %}
+
+            </div> <!-- end masonry -->
+        </div> <!-- end masonry-wrap -->
+
+        <div class="row">
+            <div class="col-full">
+                <nav class="pgn">
+                    <ul>
+                        {% if current > 1 %}
+                        <li><a class="pgn__prev" href="{{ path('index',{'page' : (current - 1)}) }}"><div class="sprite icon-arrow-left"></div></a></li>
+                        <li><a class="pgn__num" href="{{ path('index',{'page' : (current - 1)} ) }}">{{ current - 1 }}</a></li>
+                        {% endif %}
+                        <li><span class="pgn__num current">{{ current }}</span></li>
+                        <li><a class="pgn__num" href="{{ path('index',{'page' : (current + 1)} ) }}">{{ current + 1 }}</a></li>
+                        <li><a class="pgn__num" href="{{ path('index',{'page' : (current + 2)} ) }}">{{ current + 2 }}</a></li>
+                        <li><a class="pgn__num" href="{{ path('index',{'page' : (current + 3)} ) }}">{{ current + 3 }}</a></li>
+                        <li><span class="pgn__num dots">…</span></li>
+                        <li><a class="pgn__num" href="{{ path('index',{'page' : (count)} )}}">{{ count }}</a></li>
+                        <li><a class="pgn__num" href="{{ path('index',{'page' : (count + 1)} )}}">{{ count + 1 }}</a></li>
+                        <li><a class="pgn__next" href="{{ path('index',{'page' : (current + 1)} ) }}"><div class="sprite icon-arrow-right"></div></a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+    </section> <!-- s-content -->
+
+
+    <!-- s-extra
+    ================================================== -->
+    {{ include("fragments/popular.html.twig") }}
+    <!-- end s-extra -->
+
+
+    <!-- s-footer
+    ================================================== -->
+    {{ include("fragments/footer.html.twig") }}
+    <!-- end s-footer -->
+
+
+    <!-- preloader
+    ================================================== -->
+    <div id="preloader">
+        <div id="loader">
+            <div class="line-scale">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Java Script
+    ================================================== -->
+    <script src="{{ asset('assets/js/jquery-3.2.1.min.js')}}"></script>
+    <script src="{{ asset('assets/js/plugins.js')}}"></script>
+    <script src="{{ asset('assets/js/main.js')}}"></script>
+
+</div>
+</body>
+</html>
+{% endhtmlcompress %}

@@ -1,0 +1,250 @@
+{% extends 'setting/base.html.twig' %}
+{% block stylesheets %}
+<style>
+
+    /* The following styles are just to make the page look nice. */
+
+    /* Workaround to show Arial Black in Firefox. */
+    @font-face
+    {
+        font-family: 'arial-black';
+        src: local('Arial Black');
+    }
+
+    *[contenteditable="true"]
+    {
+        padding: 10px;
+    }
+
+    #container
+    {
+        width: 960px;
+        margin: 30px auto 0;
+    }
+
+    #header
+    {
+        overflow: hidden;
+        padding: 0 0 30px;
+        border-bottom: 5px solid #05B2D2;
+        position: relative;
+    }
+
+    #headerLeft,
+    #headerRight
+    {
+        width: 49%;
+        overflow: hidden;
+    }
+
+    #headerLeft
+    {
+        float: left;
+        padding: 10px 1px 1px;
+    }
+
+    #headerLeft h2,
+    #headerLeft h3
+    {
+        text-align: right;
+        margin: 0;
+        overflow: hidden;
+        font-weight: normal;
+    }
+
+    #headerLeft h2
+    {
+        font-family: "Arial Black",arial-black;
+        font-size: 4.6em;
+        line-height: 1.1em;
+        text-transform: uppercase;
+    }
+
+    #headerLeft h3
+    {
+        font-size: 2.3em;
+        line-height: 1.1em;
+        margin: .2em 0 0;
+        color: #666;
+    }
+
+    #headerRight
+    {
+        float: right;
+        padding: 1px;
+    }
+
+    #headerRight p
+    {
+        line-height: 1.8em;
+        text-align: justify;
+        margin: 0;
+    }
+
+    #headerRight p + p
+    {
+        margin-top: 20px;
+    }
+
+    #headerRight > div
+    {
+        padding: 20px;
+        margin: 0 0 0 30px;
+        font-size: 1.4em;
+        color: #666;
+    }
+
+    #columns
+    {
+        color: #333;
+        overflow: hidden;
+        padding: 20px 0;
+    }
+
+    #columns > div
+    {
+        float: left;
+        width: 33.3%;
+    }
+
+    #columns #column1 > div
+    {
+        margin-left: 1px;
+    }
+
+    #columns #column3 > div
+    {
+        margin-right: 1px;
+    }
+
+    #columns > div > div
+    {
+        margin: 0px 10px;
+        padding: 10px 20px;
+    }
+
+    #columns blockquote
+    {
+        margin-left: 15px;
+    }
+
+    #tagLine
+    {
+        border-top: 5px solid #05B2D2;
+        padding-top: 20px;
+    }
+
+    #taglist {
+        display: inline-block;
+        margin-left: 20px;
+        font-weight: bold;
+        margin: 0 0 0 20px;
+    }
+
+</style>
+{% endblock %}
+
+{% block action %}
+{% endblock %}
+{% block body %}
+<form action="{{ path('setting_save_update',{'id' : article.id }) }}" method="POST" >
+    <div class="row">
+        <div class="col-md-12 panel-info">
+            <div class="content-box-header panel-heading">
+                <div class="panel-title ">Information sur l'article : </div>
+                <div class="panel-options">
+                    <a href="#" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a>
+                    <a href="#" data-rel="reload"><i class="glyphicon glyphicon-cog"></i></a>
+                </div>
+            </div>
+            <div class="content-box-large box-with-header">
+                <div>
+                    <div class="row" >
+                        <p class="alert-box--error" >{{ erreur }}</p>
+                    </div>
+                    <div class="row" >
+                        <label class="col-md-6 control-label" for="title">Titre</label>
+                        <label class="col-md-6 control-label" for="date">Date de sorti</label>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 pull-left">
+                            <input class="form-control" type="text" name="title" placeholder="Titre de l'article" value="{{ article.titre }}"></p>
+                        </div>
+                        <div class="col-sm-6 pull-left">
+                            <input class="form-control" type="date" name="date" value="{{ article.created | date('d/m/Y') }} " ></p>
+                        </div>
+                    </div>
+                    <div class="row" >
+                    <label class="col-md-6 control-label" for="meta">Mot clés<a class="pull-right"><i class="glyphicon glyphicon-plus-sign"></i></a></label>
+                    <label class="col-md-6 control-label" for="categorie">Categorie<a class="pull-right"><i class="glyphicon glyphicon-plus-sign"></i></a></label>
+                    </div>
+                    <div class="row" >
+                        <div class="form-group">
+                            
+                            <div class="col-md-6">
+                            {% for tag in article.tags %}
+                               <input class="form-control" required type="text" name="meta" placeholder="ex : voiture" value="{{ tag.mots }}"></p>
+                            {% endfor %}
+                            </div>
+                            <div class="col-md-6">
+                                <select class="form-control" id="categorie">
+                                {% for categorie in categories %}
+                                    <option {% if categorie.id == article.category.id %} selected {% endif %}>{{ categorie.catnom }}</option>
+                                {% endfor %}
+                                </select> 
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="row" >
+                    </br>
+                    <label class="col-md-6 control-label" for="tags">Desciption</label>
+                    </div>
+                    <div class="row" >
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <textarea name="description" required style="height : 100px;width:100%">{{ article.presentation  }}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 panel-primary">
+            <div class="content-box-header panel-heading">
+                <div class="panel-title ">Contenu de l'article ( click to edit )</div>
+                
+                <div class="panel-options">
+                    <a href="#" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i>Reload</a>
+                </div>
+            </div>
+            <div class="content-box-large box-with-header"  style="background-color:#2c37421c;padding : 5px;margin-bottom:25px;">
+                <textarea name="article-body" class="form-inline">
+                   {{ article.contenu | raw }}
+                </textarea>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+    <div class="col-md-12 panel-danger">
+        <div class="content-box-header panel-heading">
+            <div class="panel-title">Action</div>
+        </div>
+        <div class="content-box-large box-with-header" style="background-color:#2c37421c;">
+            <a href="#" class="btn btn-default" style="width : 100%;"><i class="glyphicon glyphicon-eye-open"></i> See</a>
+            <button type="submit" class="btn btn-primary"  style="width : 100%;margin-top:15px;"><i class="glyphicon glyphicon-save"></i> Save</button>
+            <a href="{{ path('setting_delete_update',{'id' : article.id}) }}" class="btn btn-danger"  style="width : 100%;margin-top:15px;"><i class="glyphicon glyphicon-remove"></i> Delete</a>
+        </div>
+    </div>
+</div>
+    </form>
+{% endblock %}
+
+{% block javascripts%}
+    <script src="{{ asset('assets/editor/ckeditor.js') }}"></script>
+    <script>
+        CKEDITOR.inline( 'article-body' );
+    </script>
+{% endblock %}

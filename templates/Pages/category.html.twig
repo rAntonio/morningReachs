@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="row narrow">
+            <div class="col-full s-content__header" data-aos="fade-up">
+                <h1>Category: {{ title }}</h1>
+
+                <p class="lead"><p/>
+            </div>
+        </div>
+        
+        <div class="row masonry-wrap">
+            <div class="masonry">
+
+                <div class="grid-sizer"></div>
+{% for article in articles %}
+                <article class="masonry__brick entry format-standard" data-aos="fade-up">
+                        
+                    <div class="entry__thumb">
+                        <a href="{{ path('index_detail',{'id' : article.id,'titre' : article.titre }) }}" class="entry__thumb-link">
+                            <img src="../{{ article.image }}"  alt="">
+                        </a>
+                    </div>
+    
+                    <div class="entry__text">
+                        <div class="entry__header">
+                            
+                            <div class="entry__date">
+                                <a href="{{ path('index_detail',{'id' : article.id,'titre' : article.titre }) }}">{{ article.created | date('m')}} 
+                                {{ article.created | date('d')}}, {{ article.created | date('Y')}}</a>
+                            </div>
+                            <h1 class="entry__title"><a href="{{ path('index_detail',{'id' : article.id,'titre' : article.titre }) }}">{{article.titre}}</a></h1>
+                            
+                        </div>
+                        <div class="entry__excerpt">
+                            {{ article.presentation | raw }}
+                        </div>
+                        <div class="entry__meta">
+                            <span class="entry__meta-links">
+                                <a href="category.html">Design</a> 
+                                <a href="category.html">Photography</a>
+                            </span>
+                        </div>
+                    </div>
+    
+                </article> <!-- end article -->
+{% endfor %}
+            </div> <!-- end masonry -->
+        </div> <!-- end masonry-wrap -->
+
+        <div class="row">
+            <div class="col-full">
+                <nav class="pgn">
+                    <ul>
+                        <li><a class="pgn__prev" href="#0">Prev</a></li>
+                        <li><a class="pgn__num" href="#0">1</a></li>
+                        <li><span class="pgn__num current">2</span></li>
+                        <li><a class="pgn__num" href="#0">3</a></li>
+                        <li><a class="pgn__num" href="#0">4</a></li>
+                        <li><a class="pgn__num" href="#0">5</a></li>
+                        <li><span class="pgn__num dots">…</span></li>
+                        <li><a class="pgn__num" href="#0">8</a></li>
+                        <li><a class="pgn__next" href="#0">Next</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+{% endblock %}

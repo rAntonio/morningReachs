@@ -1,0 +1,49 @@
+{% extends 'setting/base.html.twig' %}
+
+{% block body %}
+<div class="content-box-large">
+    <div class="panel-heading">
+        <div class="panel-title">Post List</div>
+    </div>
+    <div class="panel-body">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Visits</th>
+                    <th>Title</th>
+                    <th>Auteur</th>
+                    <th>Categorie</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for article in articles %}
+                <tr>
+                    <td>{{ article.id }}</td>
+                    <td>{{ article.titre }}</td>
+                    <td>{{ article.idAuteur.nom}}</td>
+                    <td>{{ article.category.catnom }} </td>
+                    <td><a href="{{ path('setting_postupdate',{'id' : article.id } ) }}" class="btn btn-danger"><i class="glyphicon glyphicon-edit"></i> Edit</a><td>
+                </tr>
+                {% endfor %}
+                 {% if articles|length == 0 %}
+                <tr>
+                    <td> 
+                    Aucun article référencer
+                    </td>
+                </tr>
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
+        {% if articles|length > 0 %}
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <a class="btn btn-info" href="{{ path('index_setting',{'page' : current - 1 }) }}" ><i class="glyphicon glyphicon-arrow-left" ></i>  Previous</a>
+                <a class="btn btn-info" href="{{ path('index_setting',{'page' : current + 1 }) }}" >Next  <i class="glyphicon glyphicon-arrow-right" ></i></a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
